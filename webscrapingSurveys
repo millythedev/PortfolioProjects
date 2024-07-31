@@ -1,0 +1,150 @@
+import selenium
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+import random
+import time
+
+# List of user agents for different devices
+USER_AGENTS = [
+    # Mobile devices
+    "Mozilla/5.0 (Linux; Android 10; SM-G960U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Mobile Safari/537.36",  # Samsung Galaxy S9
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/89.0.4389.82 Mobile/15E148 Safari/604.1",  # iPhone 12
+    # Tablet devices
+    "Mozilla/5.0 (Linux; Android 10; SM-T500) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36",  # Samsung Galaxy Tab A7
+    "Mozilla/5.0 (iPad; CPU OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/89.0.4389.82 Mobile/15E148 Safari/604.1",  # iPad 8th Gen
+]
+
+def complete_questionnaire(code, user_agent):
+    # Set user agent
+    options = webdriver.ChromeOptions()
+    options.add_argument(f'user-agent={user_agent}')
+    driver = webdriver.Chrome(options=options)
+
+    # Open the website
+    driver.get("https://www.myzaxbysfeedback.com/?AspxAutoDetectCookieSupport=1")
+
+    # Find the entry field and input the code
+    entry_field = driver.find_elements(By.CSS_SELECTOR,"#CN1")[0]
+    
+    entry_field.send_keys(code)
+
+    # Submit the code (assuming pressing Enter submits the form)
+    entry_field.send_keys(Keys.ENTER)
+
+    # Wait for the questionnaire to load (adjust wait time as needed)
+    time.sleep(5)
+
+    # Main Question 1
+    option_HS = driver.find_elements(By.XPATH,"//td[@class='Opt5 inputtyperbloption']//span[@class='radioSimpleInput']")[0]
+    option_HS.click()
+    time.sleep(3)
+
+    Q1_nextButton = driver.find_elements(By.XPATH,"//input[@id='NextButton']")[0]
+    Q1_nextButton.click()
+    time.sleep(3)
+
+    # Question 2
+    option_1 = driver.find_elements(By.XPATH,"//div[@class='Opt1 rbloption']//span[@class='radioSimpleInput']")[0]
+    option_1.click()
+    time.sleep(3)
+
+    Q2_nextButton = driver.find_elements(By.XPATH,"//input[@id='NextButton']")[0]
+    Q2_nextButton.click()
+    time.sleep(3)
+
+    # Question 3 (long list)
+    # Simulated click for each option (replace with actual logic)
+    for i in range(2, 8):
+        option = driver.find_elements(By.CSS_SELECTOR, f"body > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) > form:nth-child(1) > div:nth-child(1) > table:nth-child(3) > tbody:nth-child(2) > tr:nth-child({i}) > td:nth-child(2) > span:nth-child(1)")[0]
+        option.click()
+    time.sleep(3)
+
+    Q3_nextButton = driver.find_elements(By.XPATH,"//input[@id='NextButton']")[0]
+    Q3_nextButton.click()
+    time.sleep(3)
+
+    # Question 4 (satisfaction of food)
+    for i in range(2, 5):
+        option = driver.find_elements(By.CSS_SELECTOR, f"body > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) > form:nth-child(1) > div:nth-child(1) > table:nth-child(3) > tbody:nth-child(2) > tr:nth-child({i}) > td:nth-child(2) > span:nth-child(1)")[0]
+        option.click()
+
+    Q4_nextButton = driver.find_elements(By.XPATH,"//input[@id='NextButton']")[0]
+    Q4_nextButton.click()
+    time.sleep(3)
+
+    # Question 5 (Yes or No)
+    no = driver.find_elements(By.CSS_SELECTOR,"td[class='Opt2 inputtyperbloption'] span[class='radioSimpleInput']")[0]
+    no.click()
+
+    Q5_nextButton = driver.find_elements(By.XPATH,"//input[@id='NextButton']")[0]
+    Q5_nextButton.click()
+    time.sleep(3)
+
+    # Question 6 (likelihood of returning)
+    for i in range(2, 4):
+        option = driver.find_elements(By.CSS_SELECTOR, f"body > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) > form:nth-child(1) > div:nth-child(1) > table:nth-child(3) > tbody:nth-child(2) > tr:nth-child({i}) > td:nth-child(2) > span:nth-child(1)")[0]
+        option.click()
+
+    Q6_nextButton = driver.find_elements(By.XPATH,"//input[@id='NextButton']")[0]
+    Q6_nextButton.click()
+    time.sleep(3)
+
+    # Question 7 (sentences)
+    # Simulated click (replace with actual logic)
+    Q7_nextButton = driver.find_elements(By.XPATH,"//input[@id='NextButton']")[0]
+    Q7_nextButton.click()
+    time.sleep(3)
+
+    # Question 8 (recognition)
+    no = driver.find_elements(By.CSS_SELECTOR,"td[class='Opt2 inputtyperbloption'] span[class='radioSimpleInput']")[0]
+    no.click()
+    time.sleep(3)
+
+    Q8_nextButton = driver.find_elements(By.XPATH,"//input[@id='NextButton']")[0]
+    Q8_nextButton.click()
+    time.sleep(3)
+
+    # Question 9 (LTO)
+    NOTA = driver.find_elements(By.CSS_SELECTOR,"div[id='FNSR000208'] span[class='checkboxSimpleInput']")[0]
+    NOTA.click()
+
+    Q9_nextButton = driver.find_elements(By.XPATH,"//input[@id='NextButton']")[0]
+    Q9_nextButton.click()
+    time.sleep(3)
+
+    # Question 10 (specificity)
+    other = driver.find_elements(By.CSS_SELECTOR,"div[id='FNSR000035'] span[class='checkboxSimpleInput']")[0]
+    other.click()
+
+    Q10_nextButton = driver.find_elements(By.XPATH,"//input[@id='NextButton']")[0]
+    Q10_nextButton.click()
+    time.sleep(3)
+
+    # Question 11 (sauces)
+    # Simulated click for each option (replace with actual logic)
+    for i in range(2, 4):
+        option = driver.find_elements(By.CSS_SELECTOR, f"body > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) > form:nth-child(1) > div:nth-child(1) > table:nth-child(2) > tbody:nth-child(1) > tr:nth-child({i}) > td:nth-child(2) > span:nth-child(1)")[0]
+        option.click()
+
+    Q11_nextButton = driver.find_elements(By.XPATH,"//input[@id='NextButton']")[0]
+    Q11_nextButton.click()
+
+    # Add logic for the remaining questions
+
+    # Close the browser when done
+    driver.quit()
+
+# Ask for code entries until "#" is typed
+codes = []
+while True:
+    code = input("Enter a code (type '#' to finish): ")
+    if code == "#":
+        break
+    codes.append(code)
+
+# Loop through the codes and complete the questionnaire for each
+for code in codes:
+    # Randomly select a user agent from the list
+    user_agent = random.choice(USER_AGENTS)
+    complete_questionnaire(code, user_agent)
