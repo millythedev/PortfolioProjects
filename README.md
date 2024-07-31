@@ -1,0 +1,5 @@
+/*
+this is to be a collection of all the side or main projects in have worked
+on in the past to showcase some of my abilites and potentially show what i 
+have to work on as well
+*/
